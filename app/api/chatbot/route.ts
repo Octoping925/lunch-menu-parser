@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    await fetch(process.env.CHATBOT_URL as string, {
+    await fetch(process.env.CRON_SECRET as string, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -19,9 +19,7 @@ export async function GET() {
           },
         ],
       }),
-    })
-      .then((res) => res.text())
-      .then(console.log);
+    });
 
     return new NextResponse("success", {
       headers: {
