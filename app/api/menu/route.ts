@@ -1,27 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import sharp from "sharp";
 
-// 요일별 자르기 좌표 (예시 - 실제 이미지에 맞게 조정 필요)
 const DAY_OF_WEEKS_CROP: Record<
   string,
   { left: number; top: number; width: number; height: number }
 > = {
-  monday: { left: 0, top: 100, width: 200, height: 300 },
-  tuesday: { left: 200, top: 100, width: 200, height: 300 },
-  wednesday: { left: 400, top: 100, width: 200, height: 300 },
-  thursday: { left: 600, top: 100, width: 200, height: 300 },
-  friday: { left: 800, top: 100, width: 200, height: 300 },
+  monday: { left: 125, top: 332, width: 209, height: 335 },
+  tuesday: { left: 334, top: 332, width: 209, height: 335 },
+  wednesday: { left: 542, top: 332, width: 209, height: 335 },
+  thursday: { left: 750, top: 332, width: 209, height: 335 },
+  friday: { left: 958, top: 332, width: 209, height: 335 },
 };
 
-export async function POST(req: NextRequest) {
+export async function GET(req: NextRequest) {
+  const dayOfWeek = new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+  });
+
   try {
     const { imageUrl } = await req.json();
 
-    // 요일
-    const now = new Date();
-    const dayOfWeek = now.toLocaleDateString("ko-KR", { weekday: "long" });
-
-    // 이미지 URL에서 이미지를 가져옴
     const response = await fetch(imageUrl);
     const arrayBuffer = await response.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
