@@ -4,7 +4,6 @@ import { get } from "@vercel/edge-config";
 export async function GET() {
   try {
     const imageUrl = await get("menuImageUrl");
-    imageUrl?.valueOf();
     return NextResponse.json({ imageUrl });
   } catch (error) {
     console.error("Edge Config 읽기 오류:", error);
@@ -26,21 +25,21 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    /*
-    curl  -X 'POST' 'https://api.vercel.com/v1/edge-config' \
-      -H 'Authorization: Bearer your_vercel_api_token_here' \
-      -H 'Content-Type: application/json; charset=utf-8' \
-      -d $'{ "slug": "your_edge_config_name_here" }'
-     */
-
-    await fetch("https://api.vercel.com/v1/edge-config", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.VERCEL_API_TOKEN}`,
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      body: JSON.stringify({ menuImageUrl: imageUrl }),
-    });
+    await fetch(
+      "https://api.vercel.com/v1/edge-config/ecfg_pjpdrctcqe5nl1uq8q2pxfaxjx9v/items",
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${process.env.VERCEL_API_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          items: [
+            { operation: "update", key: "menuImageUrl", value: imageUrl },
+          ],
+        }),
+      }
+    );
 
     return NextResponse.json({ success: true, imageUrl });
   } catch (error) {
