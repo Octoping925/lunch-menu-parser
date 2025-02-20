@@ -1,5 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import sharp from "sharp";
+import { get } from "@vercel/edge-config";
 
 const DAY_OF_WEEKS_CROP: Record<
   string,
@@ -12,15 +13,23 @@ const DAY_OF_WEEKS_CROP: Record<
   friday: { left: 958, top: 332, width: 209, height: 335 },
 };
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   const dayOfWeek = new Date().toLocaleDateString("en-US", {
     weekday: "long",
   });
 
   try {
-    const { imageUrl } = await req.json();
+    // Edge Config에서 이미지 URL 가져오기
+    const imageUrl = await get("menuImageUrl");
 
-    const response = await fetch(imageUrl);
+    if (!imageUrl) {
+      return NextResponse.json(
+        { error: "메뉴 이미지 URL이 설정되지 않았습니다." },
+        { status: 404 }
+      );
+    }
+
+    const response = await fetch(imageUrl as string);
     const arrayBuffer = await response.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 

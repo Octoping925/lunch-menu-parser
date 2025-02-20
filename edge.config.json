@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "routes": [
+    {
+      "pathname": "/api/*",
+      "middleware": "middleware.js"
+    }
+  ],
+  "env": {
+    "EDGE_API_URL": "https://api.example.com",
+    "ANALYTICS_KEY": "your-key-here"
+  },
+  "menuImageUrl": ""
+}
