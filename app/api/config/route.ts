@@ -4,6 +4,7 @@ import { get } from "@vercel/edge-config";
 export async function GET() {
   try {
     const imageUrl = await get("menuImageUrl");
+    imageUrl?.valueOf();
     return NextResponse.json({ imageUrl });
   } catch (error) {
     console.error("Edge Config 읽기 오류:", error);
@@ -38,7 +39,7 @@ export async function POST(req: NextRequest) {
         Authorization: `Bearer ${process.env.VERCEL_API_TOKEN}`,
         "Content-Type": "application/json; charset=utf-8",
       },
-      body: JSON.stringify({ slug: imageUrl }),
+      body: JSON.stringify({ menuImageUrl: imageUrl }),
     });
 
     return NextResponse.json({ success: true, imageUrl });
