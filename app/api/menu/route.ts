@@ -50,6 +50,7 @@ export async function GET() {
         width: coord.width,
         height: coord.height,
       })
+      .resize(coord.width * 2, coord.height * 2)
       .toBuffer();
 
     // 이미지 반환
