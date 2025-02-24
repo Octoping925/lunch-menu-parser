@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/chatbot",
-      "schedule": "41 4 * * 1-5"
+      "schedule": "45 22 * * 1-5"
     }
   ]
 }
