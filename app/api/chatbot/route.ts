@@ -1,8 +1,10 @@
+import { get } from "@vercel/edge-config";
 import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    await fetch(process.env.CRON_SECRET as string, {
+    const messengerUrl = await get("messengerUrl");
+    await fetch(messengerUrl as string, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -21,12 +23,7 @@ export async function GET() {
       }),
     });
 
-    return new NextResponse("success", {
-      headers: {
-        "Content-Type": "image/jpeg",
-        "Cache-Control": "public, max-age=3600",
-      },
-    });
+    return new NextResponse("success");
   } catch (error) {
     console.error("챗봇 처리 중 오류 발생:", error);
     return NextResponse.json(

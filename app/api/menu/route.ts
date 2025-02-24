@@ -14,7 +14,11 @@ const DAY_OF_WEEKS_CROP: Record<
 };
 
 export async function GET() {
-  const dayOfWeek = new Date().toLocaleDateString("en-US", {
+  const now = new Date();
+  const utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+  const korDate = new Date(utc.getTime() + 9 * 60 * 60 * 1000);
+
+  const dayOfWeek = korDate.toLocaleDateString("en-US", {
     weekday: "long",
   });
 
