@@ -3,25 +3,32 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const messengerUrl = await get("messengerUrl");
-    await fetch(messengerUrl as string, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        botName: "밥먹는 봇",
-        botIconImage:
-          "https://i1.ruliweb.com/img/19/10/10/16db5b26c7a1b4b3.jpg",
-        attachments: [
-          {
-            title: "오늘의 메뉴",
-            imageUrl: "https://lunch-menu-parser.vercel.app/api/menu",
-            color: "blue",
-          },
-        ],
-      }),
-    });
+    const messengerUrls = await get("messengerUrls");
+
+    if (!Array.isArray(messengerUrls)) {
+      return new NextResponse("messengerUrls is not an array", { status: 400 });
+    }
+
+    for (const url of messengerUrls) {
+      await fetch(url as string, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          botName: "밥먹는 봇",
+          botIconImage:
+            "https://i.namu.wiki/i/b4vCFcxoyUzgBHLeqIV_Q9xEeFpK7e-H7cwLfjqzMakmfeERWKASNS8rO9VpvFqndaxD-lFplv3TK6kkLfeFaQ.webp",
+          attachments: [
+            {
+              title: "오늘의 메뉴",
+              imageUrl: "https://lunch-menu-parser.vercel.app/api/menu",
+              color: "blue",
+            },
+          ],
+        }),
+      });
+    }
 
     return new NextResponse("success");
   } catch (error) {
