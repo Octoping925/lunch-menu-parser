@@ -22,7 +22,7 @@ export async function GET() {
           attachments: [
             {
               title: "오늘의 메뉴",
-              imageUrl: `https://lunch-menu-parser.vercel.app/api/menu?cache-bust=${Date.now()}`,
+              imageUrl: `https://lunch-menu-parser.vercel.app/api/menu`,
               color: "blue",
             },
           ],

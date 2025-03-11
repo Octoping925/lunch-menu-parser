@@ -44,6 +44,7 @@ export async function GET(request: Request) {
     return new NextResponse(image, {
       headers: {
         "Content-Type": "image/jpeg",
+        "Cache-Control": "no-cache",
         ETag: etag,
       },
     });
