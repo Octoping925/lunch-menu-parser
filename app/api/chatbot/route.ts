@@ -1,3 +1,4 @@
+import { getKorDate, getYYYYMMDD } from "@/util/date";
 import { get } from "@vercel/edge-config";
 import { NextResponse } from "next/server";
 
@@ -8,6 +9,9 @@ export async function GET() {
     if (!Array.isArray(messengerUrls)) {
       return new NextResponse("messengerUrls is not an array", { status: 400 });
     }
+
+    const now = getKorDate();
+    const yyyyMMdd = getYYYYMMDD(now);
 
     for (const url of messengerUrls) {
       await fetch(url as string, {
@@ -22,7 +26,7 @@ export async function GET() {
           attachments: [
             {
               title: "오늘의 메뉴",
-              imageUrl: `https://lunch-menu-parser.vercel.app/api/menu`,
+              imageUrl: `https://lunch-menu-parser.vercel.app/api/menu?now=${yyyyMMdd}`,
               color: "blue",
             },
           ],
