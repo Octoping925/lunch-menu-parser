@@ -4,11 +4,11 @@ import { get } from "@vercel/edge-config";
 import { getDayOfWeek, getKorDate, getYYYYMMDD } from "@/util/date";
 
 const DAY_OF_WEEKS_CROP = {
-  monday: { left: 125, top: 332, width: 209, height: 335 },
-  tuesday: { left: 334, top: 332, width: 209, height: 335 },
-  wednesday: { left: 542, top: 332, width: 209, height: 335 },
-  thursday: { left: 750, top: 332, width: 209, height: 335 },
-  friday: { left: 958, top: 332, width: 209, height: 335 },
+  monday: { left: 113, top: 299, width: 182, height: 292 },
+  tuesday: { left: 295, top: 299, width: 182, height: 292 },
+  wednesday: { left: 477, top: 299, width: 182, height: 292 },
+  thursday: { left: 659, top: 299, width: 182, height: 292 },
+  friday: { left: 841, top: 299, width: 182, height: 292 },
   saturday: null,
   sunday: null,
 } as const;
@@ -30,7 +30,9 @@ export async function GET(request: Request) {
   }
 
   try {
-    const imageUrl = await get("menuImageUrl"); // Edge Config에서 이미지 URL 가져오기
+    const imageUrl =
+      "https://ep.einfomax.co.kr/boardupload/1745559387741_8470.png";
+    // const imageUrl = await get("menuImageUrl"); // Edge Config에서 이미지 URL 가져오기
 
     if (!imageUrl || typeof imageUrl !== "string") {
       return NextResponse.json(
