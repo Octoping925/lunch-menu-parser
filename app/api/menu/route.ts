@@ -30,7 +30,9 @@ export async function GET(request: Request) {
   }
 
   try {
-    const imageUrl = await get("menuImageUrl"); // Edge Config에서 이미지 URL 가져오기
+    const imageUrl =
+      "https://ep.einfomax.co.kr/boardupload/1745559387741_8470.png";
+    // const imageUrl = await get("menuImageUrl"); // Edge Config에서 이미지 URL 가져오기
 
     if (!imageUrl || typeof imageUrl !== "string") {
       return NextResponse.json(
