@@ -3,12 +3,16 @@ import sharp from "sharp";
 import { get } from "@vercel/edge-config";
 import { getDayOfWeek, getKorDate, getYYYYMMDD } from "@/util/date";
 
+const TOP = 312;
+const WIDTH = 195;
+const HEIGHT = 316;
+
 const DAY_OF_WEEKS_CROP = {
-  monday: { left: 125, top: 332, width: 209, height: 335 },
-  tuesday: { left: 334, top: 332, width: 209, height: 335 },
-  wednesday: { left: 542, top: 332, width: 209, height: 335 },
-  thursday: { left: 750, top: 332, width: 209, height: 335 },
-  friday: { left: 958, top: 332, width: 209, height: 335 },
+  monday: { left: 118, top: TOP, width: WIDTH, height: HEIGHT },
+  tuesday: { left: 313, top: TOP, width: WIDTH, height: HEIGHT },
+  wednesday: { left: 512, top: TOP, width: WIDTH, height: HEIGHT },
+  thursday: { left: 707, top: TOP, width: WIDTH, height: HEIGHT },
+  friday: { left: 903, top: TOP, width: WIDTH, height: HEIGHT },
   saturday: null,
   sunday: null,
 } as const;
