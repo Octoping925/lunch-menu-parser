@@ -1,3 +1,4 @@
+import { DoorayBotMessage } from "@/domain/dooray/types/types";
 import { getKorDate, getYYYYMMDD } from "@/util/date";
 import { get } from "@vercel/edge-config";
 import { NextResponse } from "next/server";
@@ -13,24 +14,24 @@ export async function GET() {
     const now = getKorDate();
     const yyyyMMdd = getYYYYMMDD(now);
 
+    const messageBody: DoorayBotMessage = {
+      botName: "밥먹는 봇",
+      botIconImage:
+        "https://i.namu.wiki/i/b4vCFcxoyUzgBHLeqIV_Q9xEeFpK7e-H7cwLfjqzMakmfeERWKASNS8rO9VpvFqndaxD-lFplv3TK6kkLfeFaQ.webp",
+      attachments: [
+        {
+          title: "오늘의 메뉴",
+          imageUrl: `https://lunch-menu-parser.vercel.app/api/menu?now=${yyyyMMdd}`,
+          color: "blue",
+        },
+      ],
+    };
+
     for (const url of messengerUrls) {
       await fetch(url as string, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          botName: "밥먹는 봇",
-          botIconImage:
-            "https://i.namu.wiki/i/b4vCFcxoyUzgBHLeqIV_Q9xEeFpK7e-H7cwLfjqzMakmfeERWKASNS8rO9VpvFqndaxD-lFplv3TK6kkLfeFaQ.webp",
-          attachments: [
-            {
-              title: "오늘의 메뉴",
-              imageUrl: `https://lunch-menu-parser.vercel.app/api/menu?now=${yyyyMMdd}`,
-              color: "blue",
-            },
-          ],
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(messageBody),
       });
     }
 
