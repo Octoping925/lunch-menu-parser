@@ -39,16 +39,16 @@ export async function GET(request: Request) {
     if (!imageUrl || typeof imageUrl !== "string") {
       return NextResponse.json(
         { error: "메뉴 이미지 URL이 설정되지 않았습니다." },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
     const image = await cropImage(imageUrl, coord);
 
-    return new NextResponse(image, {
+    return new NextResponse(Buffer.from(image), {
       headers: {
         "Content-Type": "image/jpeg",
-        "Cache-Control": "no-cache",
+        "Cache-Control": "max-age=7200", // 2 hours
         ETag: etag,
       },
     });
@@ -56,14 +56,14 @@ export async function GET(request: Request) {
     console.error("이미지 처리 중 오류 발생:", error);
     return NextResponse.json(
       { error: "이미지 처리 중 오류가 발생했습니다." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 async function cropImage(
   imageUrl: string,
-  coord: { left: number; top: number; width: number; height: number }
+  coord: { left: number; top: number; width: number; height: number },
 ) {
   const buffer = await fetch(imageUrl)
     .then((res) => res.arrayBuffer())
