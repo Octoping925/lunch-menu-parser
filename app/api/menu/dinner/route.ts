@@ -69,8 +69,5 @@ async function cropImage(
     .then((res) => res.arrayBuffer())
     .then(Buffer.from);
 
-  return sharp(buffer)
-    .extract(coord)
-    .resize(coord.width * 2, coord.height * 2)
-    .toBuffer();
+  return sharp(buffer).extract(coord).toBuffer();
 }
