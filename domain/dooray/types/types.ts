@@ -7,6 +7,7 @@ export type DoorayBotMessage = {
 
 export type DoorayAttachment = {
   title?: string;
+  text?: string;
   imageUrl?: string;
   color?: string;
 };

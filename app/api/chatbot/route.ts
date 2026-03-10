@@ -21,7 +21,13 @@ export async function GET() {
       attachments: [
         {
           title: "오늘의 메뉴",
+          text: "점심",
           imageUrl: `https://lunch-menu-parser.vercel.app/api/menu?now=${yyyyMMdd}`,
+          color: "blue",
+        },
+        {
+          text: "저녁",
+          imageUrl: `https://lunch-menu-parser.vercel.app/api/menu/dinner?now=${yyyyMMdd}`,
           color: "blue",
         },
       ],
@@ -40,7 +46,7 @@ export async function GET() {
     console.error("챗봇 처리 중 오류 발생:", error);
     return NextResponse.json(
       { error: "챗봇 처리 중 오류가 발생했습니다." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
