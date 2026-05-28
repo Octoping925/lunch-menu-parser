@@ -3,9 +3,9 @@ import sharp from "sharp";
 import { get } from "@vercel/edge-config";
 import { getDayOfWeek, getKorDate, getYYYYMMDD } from "@/util/date";
 
-const TOP = 326;
+const TOP = 315;
 const WIDTH = 202;
-const HEIGHT = 324;
+const HEIGHT = 335;
 
 const DAY_OF_WEEKS_CROP = {
   monday: { left: 124, top: TOP, width: WIDTH, height: HEIGHT },
