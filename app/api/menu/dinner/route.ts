@@ -3,7 +3,7 @@ import sharp from "sharp";
 import { get } from "@vercel/edge-config";
 import { getDayOfWeek, getKorDate, getYYYYMMDD } from "@/util/date";
 
-const TOP = 645;
+const TOP = 620;
 const WIDTH = 202;
 const HEIGHT = 150;
 
@@ -18,7 +18,10 @@ const DAY_OF_WEEKS_CROP = {
 } as const;
 
 export async function GET(request: Request) {
-  const korDate = getKorDate();
+  const { searchParams } = new URL(request.url);
+  const nowParam = searchParams.get("now");
+
+  const korDate = getDate(nowParam);
   const dayOfWeek = getDayOfWeek(korDate);
 
   const coord = DAY_OF_WEEKS_CROP[dayOfWeek];
@@ -59,6 +62,21 @@ export async function GET(request: Request) {
       { status: 500 },
     );
   }
+}
+
+function getDate(nowParam: string | null) {
+  if (!nowParam) {
+    return getKorDate();
+  }
+
+  const dateMatch = nowParam.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+
+  if (!dateMatch) {
+    return getKorDate();
+  }
+
+  const [_, year, month, day] = dateMatch;
+  return new Date(`${year}-${month}-${day}T09:00:00`);
 }
 
 async function cropImage(
