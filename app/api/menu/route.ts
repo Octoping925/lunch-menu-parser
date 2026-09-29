@@ -37,10 +37,7 @@ export async function GET(request: Request) {
   }
 
   try {
-    // const imageUrl = await get("menuImageUrl"); // Edge Config에서 이미지 URL 가져오기
-    const imageUrl =
-      "https://ep.einfomax.co.kr/boardupload/1790145434453_6631.png";
-
+    const imageUrl = await get("menuImageUrl"); // Edge Config에서 이미지 URL 가져오기
     if (!imageUrl || typeof imageUrl !== "string") {
       return NextResponse.json(
         { error: "메뉴 이미지 URL이 설정되지 않았습니다." },
