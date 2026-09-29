@@ -3,9 +3,9 @@ import sharp from "sharp";
 import { get } from "@vercel/edge-config";
 import { getDayOfWeek, getKorDate, getYYYYMMDD } from "@/util/date";
 
-const TOP = 315;
+const TOP = 300;
 const WIDTH = 202;
-const HEIGHT = 305;
+const HEIGHT = 320;
 
 const DAY_OF_WEEKS_CROP = {
   monday: { left: 124, top: TOP, width: WIDTH, height: HEIGHT },
@@ -37,7 +37,9 @@ export async function GET(request: Request) {
   }
 
   try {
-    const imageUrl = await get("menuImageUrl"); // Edge Config에서 이미지 URL 가져오기
+    // const imageUrl = await get("menuImageUrl"); // Edge Config에서 이미지 URL 가져오기
+    const imageUrl =
+      "https://ep.einfomax.co.kr/boardupload/1790145434453_6631.png";
 
     if (!imageUrl || typeof imageUrl !== "string") {
       return NextResponse.json(
